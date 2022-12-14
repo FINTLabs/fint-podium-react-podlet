@@ -1,0 +1,37 @@
+
+on:
+  release:
+    types: published
+
+
+
+name: Upload NPM package
+
+jobs:
+
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 16.x
+
+      - name: Set version
+        run: |
+          echo "RELEASE_VERSION=${TAG_NAME:1}" >> $GITHUB_ENV
+        env:
+          TAG_NAME: ${{github.event.release.tag_name}}
+
+      - name: Update version
+        run: npm version ${{ env.RELEASE_VERSION }}
+
+      - name: Publish package
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+

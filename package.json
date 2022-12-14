@@ -1,0 +1,16 @@
+{
+  "name": "@fintlabs/fint-podium-react-podlet",
+  "version": "1.0.0",
+  "description": "Podium-lib helpers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "FINTLabs",
+  "license": "MIT",
+  "dependencies": {
+    "@podium/podlet": "^4.4.68",
+    "express": "^4.18.2"
+  }
+}
