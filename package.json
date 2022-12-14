@@ -1,6 +1,6 @@
 {
   "name": "@fintlabs/fint-podium-react-podlet",
-  "version": "1.0.1",
+  "version": "0.0.0",
   "description": "Podium-lib helpers",
   "main": "index.js",
   "scripts": {
