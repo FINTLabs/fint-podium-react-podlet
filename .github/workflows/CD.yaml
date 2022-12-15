@@ -31,7 +31,7 @@ jobs:
       #  run: yarn version --new-version ${{ env.RELEASE_VERSION }} --no-git-tag-version --allow-same-version
 
       - name: Publish package
-        run: yarn publish --new-version ${{ env.RELEASE_VERSION }} --access public
+        run: yarn publish --new-version ${{ env.RELEASE_VERSION }} --no-git-tag-version --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
