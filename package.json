@@ -2,6 +2,7 @@
   "name": "@fintlabs/fint-podium-react-podlet",
   "version": "1.0.0",
   "description": "Podium-lib helpers",
+  "private": false,
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
