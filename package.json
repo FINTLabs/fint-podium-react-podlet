@@ -1,13 +1,21 @@
 {
   "name": "@fintlabs/fint-podium-react-podlet",
   "version": "1.0.0",
-  "description": "Podium-lib helpers",
+  "description": "This is a small helper library to help create a podlet for you react project to run in the FINTLabs/FLAIS environment.",
   "private": false,
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "podium-lib",
+    "podium",
+    "fint",
+    "fintlabs",
+    "vigo-iks",
+    "react"
+  ],
+  "homepage": "https://www.fintlabs.no",
   "author": "FINTLabs",
   "license": "MIT",
   "dependencies": {
