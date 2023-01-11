@@ -4,19 +4,21 @@ const {
     PODLET_VERSION, PODLET_PATH_NAME, IS_DEVELOPMENT
 } = require("./environment");
 const {createBaseUri} = require("./utils");
+const log = require("./logger");
+
 
 const ensureAssets = () => {
     if (!fs.existsSync("./asset-manifest.json")) {
-        console.log("asset-manifest.json not found!")
+        log.info("asset-manifest.json not found!")
         if (fs.existsSync("../build/asset-manifest.json")) {
-            console.log("Copying asset-manifest.json from build directory...")
+            log.info("Copying asset-manifest.json from build directory...")
             fs.copyFileSync("../build/asset-manifest.json", "asset-manifest.json")
         } else {
-            console.log("No asset-manifest.json found. Aborting!")
+            log.info("No asset-manifest.json found. Aborting!")
             process.exit(1)
         }
     } else {
-        console.log("Found asset-manifest.json")
+        log.info("Found asset-manifest.json")
     }
 
     return JSON.parse(fs.readFileSync('./asset-manifest.json'))
@@ -24,6 +26,7 @@ const ensureAssets = () => {
 
 const createPod = (podletName) => {
 
+    log.info('Creating podlet...')
     const podlet = new Podlet({
         name: podletName,
         version: PODLET_VERSION,
@@ -49,6 +52,7 @@ const createPod = (podletName) => {
         }
     });
 
+    log.info('Podlet created:', JSON.stringify(podlet));
     return podlet
 }
 

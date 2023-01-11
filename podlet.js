@@ -1,8 +1,6 @@
 const express = require("express");
 const promMid = require('express-prometheus-middleware');
-const log4js = require("log4js");
-const log = log4js.getLogger();
-
+const log = require('./logger');
 const podFactory = require("./pod-factory");
 const {
     IS_DEVELOPMENT,
