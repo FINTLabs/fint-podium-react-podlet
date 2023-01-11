@@ -24,7 +24,8 @@ const morgan = require("morgan");
     app.use(podlet.middleware());
 
 
-    IS_DEVELOPMENT && app.use("/static", express.static("build/static"));
+
+    IS_DEVELOPMENT && app.use("/static", express.static('../build/static'));
 
     app.get(podlet.content(), (req, res) => {
         res.status(200).podiumSend(`<div id="${podletName}"></div>`);
