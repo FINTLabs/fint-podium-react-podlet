@@ -1,17 +1,26 @@
 const express = require("express");
+const promMid = require('express-prometheus-middleware');
+const log4js = require("log4js");
+const log = log4js.getLogger();
+
 const podFactory = require("./pod-factory");
 const {
     IS_DEVELOPMENT,
     PODLET_PORT,
 } = require("./environment");
+const morgan = require("morgan");
 
 
  const runPod = (podletName) => {
 
     const app = express();
 
+     app.use(morgan("combined"))
+     app.use(promMid({
+         collectDefaultMetrics: true,
+     }));
 
-    const podlet = podFactory.createPod(podletName)
+     const podlet = podFactory.createPod(podletName)
 
 
     app.use(podlet.middleware());
@@ -28,8 +37,8 @@ const {
     });
 
     app.listen(PODLET_PORT, () => {
-        console.log("Podlet  started!")
-        console.log(`http://localhost:${PODLET_PORT}/manifest.json`)
+        log.info("Podlet  started!")
+        log.info(`http://localhost:${PODLET_PORT}/manifest.json`)
     });
 
 }
