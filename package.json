@@ -19,10 +19,11 @@
   "author": "FINTLabs",
   "license": "MIT",
   "dependencies": {
-    "@podium/podlet": "^4.4.68",
+    "@podium/podlet": "^4.4.69",
     "express": "^4.18.2",
     "express-prometheus-middleware": "^1.2.0",
     "log4js": "^6.7.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "prom-client": "^14.1.1"
   }
 }
