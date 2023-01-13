@@ -9,19 +9,20 @@ const log = require("./logger");
 
 const ensureAssets = () => {
     if (!fs.existsSync("./asset-manifest.json")) {
-        log.info("asset-manifest.json not found!")
+        log.info("asset-manifest.json not found!");
         if (fs.existsSync("../build/asset-manifest.json")) {
-            log.info("Copying asset-manifest.json from build directory...")
-            fs.copyFileSync("../build/asset-manifest.json", "asset-manifest.json")
+            log.info("Copying asset-manifest.json from build directory...");
+            fs.copyFileSync("../build/asset-manifest.json", "asset-manifest.json");
         } else {
-            log.info("No asset-manifest.json found. Aborting!")
-            process.exit(1)
+            //log.info("No asset-manifest.json found. Aborting!");
+            throw new Error("No asset-manifest.json found. Aborting!");
         }
     } else {
         log.info("Found asset-manifest.json")
     }
 
-    return JSON.parse(fs.readFileSync('./asset-manifest.json'))
+    //return JSON.parse(fs.readFileSync('./asset-manifest.json'));
+    return JSON.parse(require('./asset-manifest.json'));
 }
 
 const createPod = (podletName) => {
@@ -58,5 +59,6 @@ const createPod = (podletName) => {
 
 
 module.exports = {
-    createPod
+    createPod,
+    ensureAssets
 }
