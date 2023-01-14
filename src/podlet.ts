@@ -1,21 +1,20 @@
 import express from "express";
-
-import promMid from "express-prometheus-middleware";
-
+import prometheusMiddleware from "express-prometheus-middleware";
 import log from "./logger";
-
 import {createPod} from "./pod-factory";
-
 import {IS_DEVELOPMENT, PODLET_PORT} from "./environment";
-
 import morgan from "morgan";
 
-const runPod = (podletName: string) => {
+/**
+ *
+ * @param podletName
+ */
+const startPodService = (podletName: string) => {
 
     const app = express();
 
     app.use(morgan("combined"))
-    app.use(promMid({
+    app.use(prometheusMiddleware({
         collectDefaultMetrics: true,
     }));
 
@@ -42,5 +41,5 @@ const runPod = (podletName: string) => {
 
 }
 
-export default runPod;
+export default startPodService;
 

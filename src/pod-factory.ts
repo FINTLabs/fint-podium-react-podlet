@@ -1,18 +1,14 @@
 import fs from "fs";
-
 import Podlet from "@podium/podlet";
-
 import {IS_DEVELOPMENT, PODLET_PATH_NAME, PODLET_VERSION} from "./environment";
-
 import {createBaseUri} from "./utils";
-
 import log from "./logger";
-
-
-//import { AssetCss } from '@podium/utils';
 import type {AssetCss, AssetJs} from "@podium/utils";
 
-export const ensureAssets = () : any => {
+/**
+ *
+ */
+export const ensureAssets = (): any => {
     if (!fs.existsSync("./asset-manifest.json")) {
         log.info("asset-manifest.json not found!");
         if (fs.existsSync("../build/asset-manifest.json")) {
@@ -26,12 +22,14 @@ export const ensureAssets = () : any => {
         log.info("Found asset-manifest.json")
     }
 
-    //return JSON.parse(fs.readFileSync('./asset-manifest.json').toJSON());
     return fs.readFileSync('./asset-manifest.json').toJSON();
-    //return JSON.parse(require('./asset-manifest.json'));
 }
 
-export const createPod = (podletName: string) : Podlet => {
+/**
+ *
+ * @param podletName
+ */
+export const createPod = (podletName: string): Podlet => {
 
     log.info('Creating podlet...')
     const podlet = new Podlet({
