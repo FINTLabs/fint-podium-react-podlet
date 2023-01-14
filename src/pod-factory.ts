@@ -1,13 +1,14 @@
-const fs = require("fs")
-const Podlet = require("@podium/podlet");
-const {
-    PODLET_VERSION, PODLET_PATH_NAME, IS_DEVELOPMENT
-} = require("./environment");
-const {createBaseUri} = require("./utils");
-const log = require("./logger");
+import fs from "fs";
+import Podlet from "@podium/podlet";
+import {IS_DEVELOPMENT, PODLET_PATH_NAME, PODLET_VERSION} from "./environment";
+import {createBaseUri} from "./utils";
+import log from "./logger";
+import type {AssetCss, AssetJs} from "@podium/utils";
 
-
-const ensureAssets = () => {
+/**
+ *
+ */
+export const ensureAssets = (): any => {
     if (!fs.existsSync("./asset-manifest.json")) {
         log.info("asset-manifest.json not found!");
         if (fs.existsSync("../build/asset-manifest.json")) {
@@ -21,11 +22,14 @@ const ensureAssets = () => {
         log.info("Found asset-manifest.json")
     }
 
-    //return JSON.parse(fs.readFileSync('./asset-manifest.json'));
-    return JSON.parse(require('./asset-manifest.json'));
+    return fs.readFileSync('./asset-manifest.json').toJSON();
 }
 
-const createPod = (podletName) => {
+/**
+ *
+ * @param podletName
+ */
+export const createPod = (podletName: string): Podlet => {
 
     log.info('Creating podlet...')
     const podlet = new Podlet({
@@ -35,13 +39,13 @@ const createPod = (podletName) => {
         development: IS_DEVELOPMENT,
     });
 
-    ensureAssets().entrypoints.forEach((file) => {
+    ensureAssets().entrypoints.forEach((file: any) => {
         if (file.indexOf(".css") !== -1) {
 
             const filename = IS_DEVELOPMENT ? file : "main.css"
             podlet.css({
                 value: createBaseUri(podletName) + filename
-            });
+            } as AssetCss);
         }
         if (file.indexOf(".js") !== -1) {
             const filename = IS_DEVELOPMENT ? file : "main.js"
@@ -49,16 +53,14 @@ const createPod = (podletName) => {
             podlet.js({
                 value: createBaseUri(podletName) + filename,
                 defer: true
-            });
+            } as AssetJs);
         }
     });
+
 
     log.info('Podlet created:', JSON.stringify(podlet));
     return podlet
 }
 
 
-module.exports = {
-    createPod,
-    ensureAssets
-}
+
