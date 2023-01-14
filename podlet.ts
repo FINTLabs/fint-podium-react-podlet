@@ -1,28 +1,28 @@
-const express = require("express");
-const promMid = require('express-prometheus-middleware');
-const log = require('./logger');
-const podFactory = require("./pod-factory");
-const {
-    IS_DEVELOPMENT,
-    PODLET_PORT,
-} = require("./environment");
-const morgan = require("morgan");
+import express from "express";
 
+import promMid from "express-prometheus-middleware";
 
- const runPod = (podletName) => {
+import log from "./logger";
+
+import {createPod} from "./pod-factory";
+
+import {IS_DEVELOPMENT, PODLET_PORT} from "./environment";
+
+import morgan from "morgan";
+
+const runPod = (podletName: string) => {
 
     const app = express();
 
-     app.use(morgan("combined"))
-     app.use(promMid({
-         collectDefaultMetrics: true,
-     }));
+    app.use(morgan("combined"))
+    app.use(promMid({
+        collectDefaultMetrics: true,
+    }));
 
-     const podlet = podFactory.createPod(podletName)
+    const podlet = createPod(podletName)
 
 
     app.use(podlet.middleware());
-
 
 
     IS_DEVELOPMENT && app.use("/static", express.static('../build/static'));
@@ -42,6 +42,5 @@ const morgan = require("morgan");
 
 }
 
-module.exports = {
-     runPod
-}
+export default runPod;
+
