@@ -9,7 +9,7 @@
 /coverage
 
 # production
-/build
+**/build/
 
 # misc
 .DS_Store
@@ -30,3 +30,6 @@ package-lock.json
 
 /tests/*.test.js.map
 /tests/*.test.js
+
+/.parcel-cache/
+/docs/
