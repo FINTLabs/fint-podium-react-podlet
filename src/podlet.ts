@@ -8,8 +8,9 @@ import morgan from "morgan";
 /**
  *
  * @param podletName
+ * @param assetManifestFile
  */
-const startPodService = (podletName: string) => {
+const startPodService = (podletName: string, assetManifestFile: string = "./asset-manifest.json") => {
 
     const app = express();
 
@@ -18,7 +19,7 @@ const startPodService = (podletName: string) => {
         collectDefaultMetrics: true,
     }));
 
-    const podlet = createPod(podletName)
+    const podlet = createPod(podletName, assetManifestFile)
 
 
     app.use(podlet.middleware());
