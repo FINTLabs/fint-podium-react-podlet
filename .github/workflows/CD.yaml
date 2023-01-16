@@ -26,6 +26,9 @@ jobs:
             - name: yarn lint
               run: yarn lint
 
+            - name: yarn build
+              run: yarn build
+
             - name: Set version
               run: |
                   echo "RELEASE_VERSION=${TAG_NAME:1}" >> $GITHUB_ENV
