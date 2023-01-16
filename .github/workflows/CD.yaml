@@ -42,3 +42,15 @@ jobs:
               run: yarn publish --new-version ${{ env.RELEASE_VERSION }} --no-git-tag-version --access public
               env:
                   NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+            - name: Build TypeDocs
+              run: npx typedoc src
+
+            - name: Deploy 🚀
+              uses: JamesIves/github-pages-deploy-action@v4.3.3
+              with:
+                GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                BRANCH: docs
+                CLEAN: true
+                FOLDER: docs
+                TARGET_FOLDER: /
