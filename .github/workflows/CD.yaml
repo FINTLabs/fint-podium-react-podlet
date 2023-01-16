@@ -1,38 +1,43 @@
-
-on:
-  release:
-    types: published
-
-
-
 name: Upload NPM package
 
+on:
+    release:
+        types: published
+
 jobs:
+    build-and-deploy:
+        runs-on: ubuntu-latest
+        matrix:
+            os: [ubuntu-latest, macOS-latest, windows-latest]
+            node-version: [16.x, 18.x]
+        steps:
+            - uses: actions/checkout@v2
 
-  build-and-deploy:
-    runs-on: ubuntu-latest
-    steps:
+            - name: Setup Node
+              uses: actions/setup-node@v1
+              with:
+                  node-version: ${{ matrix.node-version }}
+                  registry-url: 'https://registry.npmjs.org'
 
-      - uses: actions/checkout@v2
+            - name: yarn install
+              run: yarn install
 
-      - name: Setup Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 16.x
-          registry-url: 'https://registry.npmjs.org'
+            - name: yarn test
+              run: yarn test
 
-      - name: Set version
-        run: |
-          echo "RELEASE_VERSION=${TAG_NAME:1}" >> $GITHUB_ENV
-        env:
-          TAG_NAME: ${{github.event.release.tag_name}}
+            - name: yarn lint
+              run: yarn lint
 
-      - name: Update version
-        run: yarn version --new-version ${{ env.RELEASE_VERSION }} --no-git-tag-version --allow-same-version
+            - name: Set version
+              run: |
+                  echo "RELEASE_VERSION=${TAG_NAME:1}" >> $GITHUB_ENV
+              env:
+                  TAG_NAME: ${{github.event.release.tag_name}}
 
-      - name: Publish package
-        run: yarn publish --new-version ${{ env.RELEASE_VERSION }} --no-git-tag-version --access public
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+            - name: Update version
+              run: yarn version --new-version ${{ env.RELEASE_VERSION }} --no-git-tag-version --allow-same-version
 
-
+            - name: Publish package
+              run: yarn publish --new-version ${{ env.RELEASE_VERSION }} --no-git-tag-version --access public
+              env:
+                  NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
