@@ -5,12 +5,15 @@ import {
     PODLET_PATH_NAME,
     PODLET_VERSION,
 } from './environment';
-import { createBaseUri } from './utils';
-import log from './logger';
+import { createBaseAssetUri } from './utils';
+import {log} from './logger';
 import type { AssetCss, AssetJs } from '@podium/utils';
 
 
-interface AssetManifest {
+/**
+ * Represents the asset-manifest.json file.
+ */
+export interface AssetManifest {
     files: object,
     entrypoints: string[]
 }
@@ -72,7 +75,7 @@ export const createPod = (
             const filename = IS_DEVELOPMENT ? file : 'main.css';
             log.info(`Adding ${filename} to podlet`);
             podlet.css({
-                value: createBaseUri(podletName) + filename,
+                value: createBaseAssetUri(podletName) + filename,
             } as AssetCss);
         }
         if (file.indexOf('.js') !== -1) {
@@ -80,7 +83,7 @@ export const createPod = (
             log.info(`Adding ${filename} to podlet`);
 
             podlet.js({
-                value: createBaseUri(podletName) + filename,
+                value: createBaseAssetUri(podletName) + filename,
                 defer: true,
             } as AssetJs);
         }

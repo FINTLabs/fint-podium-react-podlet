@@ -1,18 +1,22 @@
 import express from 'express';
 import prometheusMiddleware from 'express-prometheus-middleware';
-import log from './logger';
+import { log } from './logger';
 import { createPod } from './pod-factory';
 import { IS_DEVELOPMENT, PODLET_PORT } from './environment';
 import morgan from 'morgan';
 
 /**
+ * Start the podlet service and serves the podlet.
+ * @param podletName Name of the podlet. Should be the same as the podlet project. E.g. `fint-kontroll-appbar-pod`.
+ * @param assetManifestFile Relative or absolut path of asset-manifest.json file.
+ * @example
+ * import {startPodService} from "@fintlabs/fint-podium-react-podlet";
  *
- * @param podletName
- * @param assetManifestFile
+ * startPodService("example", __dirname + "/asset-manifest.json");
  */
 export const startPodService = (
     podletName: string,
-    assetManifestFile = './asset-manifest.json',
+    assetManifestFile = `${__dirname}/asset-manifest.json`,
 ) => {
     const app = express();
 
@@ -43,4 +47,3 @@ export const startPodService = (
     });
 };
 
-//export default startPodService;

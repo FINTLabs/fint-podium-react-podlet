@@ -27,8 +27,8 @@ jobs:
         env:
           TAG_NAME: ${{github.event.release.tag_name}}
 
-      #- name: Update version
-      #  run: yarn version --new-version ${{ env.RELEASE_VERSION }} --no-git-tag-version --allow-same-version
+      - name: Update version
+        run: yarn version --new-version ${{ env.RELEASE_VERSION }} --no-git-tag-version --allow-same-version
 
       - name: Publish package
         run: yarn publish --new-version ${{ env.RELEASE_VERSION }} --no-git-tag-version --access public
