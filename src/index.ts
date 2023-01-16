@@ -1,4 +1,4 @@
-export { startPodService } from './podlet';
+export * from './podlet';
 export * from './logger';
 export * from './utils';
 export * from './pod-factory';
