@@ -1,6 +1,7 @@
 # FINT Podium React Podlet
 
 ![npm (scoped)](https://img.shields.io/npm/v/@fintlabs/fint-podium-react-podlet)
+[![TypeDocs](https://img.shields.io/badge/Typedocs-documentation-brightgreen.svg?)](https://fintlabs.github.io/fint-podium-react-podlet/)
 
 This is a small helper library to help create a podlet for you react project to run in the FINTLabs/FLAIS environment.
 
