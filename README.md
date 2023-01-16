@@ -12,13 +12,11 @@ about `Podlets` and `podium-lib`.
 To run your React app as a Podium podlet in FLAIS you need to do the following:
 
 1. Create a sub folder in your project called `podlet`
-2. Run `yarn init`
-3. Install the following packages:
-    * `yarn add @fintlabs/fint-podium-react-podlet`
-    * `yarn add @podium/podlet`
-    * `yarn add express`
-4. Create a podlet server file called `podlet.ts` with the following code:
+2. Run `yarn init -y`
+3. Run `yarn add @fintlabs/fint-podium-react-podlet @podium/podlet express` to install dependencies:
+4. Create a podlet service:
 
+**Javascript**
 ```javascript
 const {podlet} = require("@fintlabs/fint-podium-react-podlet");
 const packageJson = require("./package.json");
@@ -26,7 +24,13 @@ const packageJson = require("./package.json");
 const PODLET_NAME = process.env.PODLET_NAME || packageJson.name;
 
 
-podlet.runPod(PODLET_NAME);
+startPodService(PODLET_NAME, `${__dirname}/asset-manifest.json`);
+```
+**Typescript**
+```ts
+import {startPodService} from "@fintlabs/fint-podium-react-podlet";
+
+startPodService(PODLET_NAME, `${__dirname}/asset-manifest.json`);
 ```
 
 In addition, you need to:

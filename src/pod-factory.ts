@@ -14,14 +14,20 @@ import type { AssetCss, AssetJs } from '@podium/utils';
  * Represents the asset-manifest.json file.
  */
 export interface AssetManifest {
+    /**
+     * Object containing a map of filenames and paths.
+     */
     files: object,
+    /**
+     * An array of all files.
+     */
     entrypoints: string[]
 }
 
 /**
  * Copies the asset-manifest.json file from assetManifestFile to current directory.
  * @param assetManifestFile Relative or absolut path of asset-manifest.json file.
- * @throws If no asset-manifest.json file is found.
+ * @throws If no `asset-manifest.json` file is found.
  */
 export const copyAssetManifestFromBuildDirectoryIfExist = (
     assetManifestFile = '../build/asset-manifest.json',
@@ -36,7 +42,6 @@ export const copyAssetManifestFromBuildDirectoryIfExist = (
 /**
  * Returns the asset-manifest.json file.
  * @param assetManifestFile Relative or absolut path of asset-manifest.json file.
- * @returns {any}
  */
 export const ensureAssets = (assetManifestFile: string): AssetManifest => {
     if (!fs.existsSync(assetManifestFile)) {
@@ -53,7 +58,7 @@ export const ensureAssets = (assetManifestFile: string): AssetManifest => {
  * Creates the Podlet.
  * @param podletName Name of the podlet
  * @param assetManifestFile Relative or absolut path to asset-manifest.json file
- *
+ * @returns {Podlet} A podium podlet.
  */
 export const createPod = (
     podletName: string,

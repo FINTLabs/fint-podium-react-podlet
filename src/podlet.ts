@@ -10,9 +10,11 @@ import morgan from 'morgan';
  * @param podletName Name of the podlet. Should be the same as the podlet project. E.g. `fint-kontroll-appbar-pod`.
  * @param assetManifestFile Relative or absolut path of asset-manifest.json file.
  * @example
+ * ```ts
  * import {startPodService} from "@fintlabs/fint-podium-react-podlet";
  *
- * startPodService("example", __dirname + "/asset-manifest.json");
+ * startPodService("example", `${__dirname}/asset-manifest.json`);
+ * ```
  */
 export const startPodService = (
     podletName: string,

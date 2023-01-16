@@ -15,6 +15,12 @@
     "lint:fix": "eslint --fix src",
     "clean": "rm -rf dist && rm -rf docs"
   },
+  "files": [
+    "dist",
+    "src",
+    "package.json",
+    "README.md"
+  ],
   "keywords": [
     "podium-lib",
     "podium",
