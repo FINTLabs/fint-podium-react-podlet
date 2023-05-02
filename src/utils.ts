@@ -1,12 +1,12 @@
-import { IS_DEVELOPMENT, K8S_CLUSTER, PODLET_PORT } from './environment';
+import { Options } from "./types";
 
 /**
  * Creates the base asset uri.
- * @param podletName
  * @returns Base asset uri.
+ * @param options
  */
-export const createBaseAssetUri = (podletName: string) : string => {
-    return IS_DEVELOPMENT
-        ? `http://localhost:${PODLET_PORT}/`
-        : `https://cdn.flais.io/${K8S_CLUSTER}/${podletName}/`;
+export const createBaseAssetUri = (options: Options): string => {
+  return options.isDevelopment
+    ? `http://localhost:${options.podletPort}/`
+    : `https://cdn.flais.io/${options.k8sCluster}/${options.podletName}/`;
 };

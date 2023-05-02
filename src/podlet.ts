@@ -1,13 +1,13 @@
-import express from 'express';
-import prometheusMiddleware from 'express-prometheus-middleware';
-import { log } from './logger';
-import { createPod } from './pod-factory';
-import { IS_DEVELOPMENT, PODLET_PORT } from './environment';
-import morgan from 'morgan';
+import express from "express";
+import prometheusMiddleware from "express-prometheus-middleware";
+import { log } from "./logger";
+import { createPod } from "./pod-factory";
+import morgan from "morgan";
+import { Options } from "./types";
 
 /**
  * Start the podlet service and serves the podlet.
- * @param podletName Name of the podlet. Should be the same as the podlet project. E.g. `fint-kontroll-appbar-pod`.
+ * @param options
  * @param assetManifestFile Relative or absolut path of asset-manifest.json file.
  * @example
  * ```ts
@@ -17,35 +17,35 @@ import morgan from 'morgan';
  * ```
  */
 export const startPodService = (
-    podletName: string,
-    assetManifestFile = `${__dirname}/asset-manifest.json`,
+  options: Options,
+  assetManifestFile = `${__dirname}/asset-manifest.json`
 ) => {
-    const app = express();
+  const app = express();
 
-    app.use(morgan('combined'));
-    app.use(
-        prometheusMiddleware({
-            collectDefaultMetrics: true,
-        }),
-    );
+  app.use(morgan("combined"));
+  app.use(
+    prometheusMiddleware({
+      collectDefaultMetrics: true
+    })
+  );
 
-    const podlet = createPod(podletName, assetManifestFile);
+  const podlet = createPod(options, assetManifestFile);
 
-    app.use(podlet.middleware());
+  app.use(podlet.middleware());
 
-    IS_DEVELOPMENT && app.use('/static', express.static('../build/static'));
+  options.isDevelopment && app.use("/static", express.static("../build/static"));
 
-    app.get(podlet.content(), (req, res) => {
-        res.status(200).podiumSend(`<div id="${podletName}"></div>`);
-    });
+  app.get(podlet.content(), (req, res) => {
+    res.status(200).podiumSend(`<div id="${options.podletName}"></div>`);
+  });
 
-    app.get(podlet.manifest(), (req, res) => {
-        res.status(200).send(podlet);
-    });
+  app.get(podlet.manifest(), (req, res) => {
+    res.status(200).send(podlet);
+  });
 
-    app.listen(PODLET_PORT, () => {
-        log.info('Podlet started 🚜!');
-        log.info(`http://localhost:${PODLET_PORT}/manifest.json`);
-    });
+  app.listen(options.podletPort, () => {
+    log.info("Podlet started 🚜!");
+    log.info(`http://localhost:${options.podletPort}/manifest.json`);
+  });
 };
 
