@@ -1,4 +1,5 @@
-import {createPod, ensureAssets} from "../src/pod-factory";
+import {createPod, ensureAssets} from "../src";
+import { Options } from "../src";
 
 describe("When ensuring assets", () => {
     it('Should throw an exception if no asset manifest file is found', () => {
@@ -17,7 +18,7 @@ describe("When ensuring assets", () => {
 });
 
 describe("When creating a podlet", () => {
-    const podlet = createPod("test", __dirname + "/asset-manifest.json");
+    const podlet = createPod(new Options("test"), __dirname + "/asset-manifest.json");
     it("Should return a object", () => {
         expect(podlet).toBeDefined();
     });
