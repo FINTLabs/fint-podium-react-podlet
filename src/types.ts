@@ -36,10 +36,12 @@ export class Options {
 
     constructor(
         podletName: string,
+        environment = 'alpha',
         podletPort = '7100',
-        isDevelopment = false,
+        isDevelopment = false
     ) {
         this.podletName = podletName;
+        this.k8sCluster = environment;
         this.podletPort = podletPort;
         this.isDevelopment = isDevelopment;
     }

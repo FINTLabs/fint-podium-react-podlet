@@ -1,3 +1,3 @@
-import {startPodService} from "../src";
+import {startPodService, Options} from "../src";
 
-startPodService("example", __dirname + "/asset-manifest.json");
+startPodService(new Options("test", "beta", '9000'), __dirname + "/asset-manifest.json");
