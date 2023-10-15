@@ -35,13 +35,14 @@ export const startPodService = (
 
   options.isDevelopment && app.use("/static", express.static("../build/static"));
 
-  app.get(podlet.content(), (req, res) => {
-    res.status(200).podiumSend(`<div id="${options.podletName}"></div>`);
-  });
-
   app.get(podlet.manifest(), (req, res) => {
     res.status(200).send(podlet);
   });
+
+  app.get('*', (req, res) => {
+    res.status(200).podiumSend(`<div id="${options.podletName}"></div>`);
+  });
+
 
   app.listen(options.podletPort, () => {
     log.info("Podlet started 🚜!");
